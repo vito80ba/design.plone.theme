@@ -92,3 +92,11 @@ class IDesignPloneThemeSettings(model.Schema):
         default=False,
         required=False
     )
+
+    header_top_items = schema.TextLine(
+        title=_(u'header_top_items',
+                default=u'Header top items'),
+        description=_(u'header_top_items',
+                      default=u'Voci di menu navigazione top'),
+        required=False,
+    )

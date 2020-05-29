@@ -222,3 +222,67 @@ class ContentRelatedItems(BaseContentRelatedItems):
             # has no permission to see the target object
             brains.extend(catalog(path=dict(query=path, depth=0)))
         return brains
+
+class SocialViewlet(base.ViewletBase):
+    def __init__(self, context, request, view, manager):
+        super(SocialViewlet, self).__init__(context, request, view, manager)
+
+    def render(self):
+        """
+        """
+        allowed_types = api.portal.get_registry_record(
+            'available_types', interface=IDesignPloneThemeSettings
+        )
+        if self.context.portal_type in allowed_types:
+            return self.index()
+        return ''
+
+    def get_socials(self):
+        socials = api.portal.get_registry_record(
+            'available_socials', interface=IDesignPloneThemeSettings
+        )
+        return socials
+
+    def get_css_class(self, social_type):
+        cssClass = SHARES[social_type]['cssClass']
+        return cssClass or ''
+
+    def get_sharer_url(self, social_type):
+        share_url = SHARES[social_type]['share_url']
+        title = quote(self.context.title.encode('utf-8'))
+        item_url = self.context.absolute_url()
+        if social_type == 'linkedin':
+            return share_url.format(item_url, title)
+        if social_type == 'twitter':
+            return share_url.format(item_url, title)
+        if social_type == 'pinterest':
+            return share_url.format('', item_url, 'false', title)
+        if social_type == 'pocket':
+            return share_url.format(item_url, title)
+        return share_url.format(item_url)
+
+    def get_target(self, social_type):
+        return SHARES.get(social_type, {}).get('target', '_blank')
+
+
+class HeaderTop(base.ViewletBase):
+
+    def get_value_from_registry(self, record):
+        try:
+            value = api.portal.get_registry_record(
+                record
+            )
+        except KeyError:
+            value = u''
+
+        return value
+
+    def update(self):
+        super(HeaderTop, self).update()
+
+        self.header_top_items = self.get_value_from_registry('uniba.headertop')
+        
+    
+    def showHeaderTop(self):
+        return (self.header_top_items)
+

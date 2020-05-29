@@ -30,7 +30,9 @@
                                      target tab/link_target|nothing;">
                     Tab Name
                   </a>
+                  
               </li>
+              
             </tal:tabs>
         </ul>
       </div>

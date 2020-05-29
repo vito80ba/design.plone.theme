@@ -8,4 +8,4 @@
          tal:attributes="alt view/logo_title;
                          title view/logo_title;
                          src view/img_src"
-    /><span tal:content="view/navigation_root_title" /></a>
+    /><!--<span tal:content="view/navigation_root_title" />--></a>

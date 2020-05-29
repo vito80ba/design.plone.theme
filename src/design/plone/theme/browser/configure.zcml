@@ -210,6 +210,15 @@
   />
 
   <browser:viewlet
+    name="uniba.header_top"
+    manager="plone.app.layout.viewlets.interfaces.IPortalTop"
+    class=".viewlets.HeaderTop"
+    template="templates/header_top.pt"
+    layer="design.plone.theme.interfaces.IDesignPloneThemeLayer"
+    permission="zope2.View"
+  />
+
+  <browser:viewlet
     name="redturtle.skip_links"
     manager="plone.app.layout.viewlets.interfaces.IPortalTop"
     class=".viewlets.SkipLinksViewlet"

@@ -1,0 +1,26 @@
+<div id="header-top"
+     i18n:domain="design.plone.theme"
+     tal:condition="view/showHeaderTop">
+    <div class="header-top-inner">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menurapido" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <span class="navbar-brand visible-xs-inline" href="#" >Uniba.it</span>
+    </div><!--/navbar-header-->
+    <div class="collapse navbar-collapse" id="menurapido">
+      <ul class="nav navbar-nav" 
+          tal:define="items view/header_top_items"
+          >
+        <li tal:repeat="rawitem items">
+        <a  tal:define="item python:rawitem.split('|')"
+            href="${python:item[1]}" title="${python:item[0]}">${python:item[0]}</a>
+        </li>
+        
+      </ul>
+    </div><!-- /.navbar-collapse -->
+    </div><!-- .header-top-inner -->
+</div>

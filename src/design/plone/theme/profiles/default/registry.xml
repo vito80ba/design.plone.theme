@@ -155,4 +155,18 @@
     </value>
   </record>
 
+  <record name="uniba.headertop">
+    <field type="plone.registry.field.Tuple">
+            <title>Voci in header top</title>
+            <value_type type="plone.registry.field.TextLine" />
+    </field>
+    <value>
+        <element>Segreteria on-line|/studenti/segreteria-on-line</element>
+        <element>Rubrica|https://persone.ict.uniba.it</element>
+        <element>Webmail|/webmail</element>
+        <element>Webradio|/ateneo/radiouniba</element>
+        <element>English version|/english-version</element>
+    </value>
+  </record>
+
 </registry>

@@ -47,7 +47,7 @@
         <xsl:if test="not(//div[@id='header-social'])"> no-social-links</xsl:if>
       </xsl:variable>
       <xsl:variable name="hasNavigation">
-        <xsl:if test="not(//nav[@class='globalnavWrapper'])"> empty-navigation</xsl:if>
+        <xsl:if test="not(//ul[@id='portal-globalnav'])"> empty-navigation</xsl:if>
       </xsl:variable>
 
       <div class="search-social-wrapper{$headerWrapper}">

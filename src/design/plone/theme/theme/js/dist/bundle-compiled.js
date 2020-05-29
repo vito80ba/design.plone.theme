@@ -173,6 +173,9 @@
 
 require(['jquery', 'ellipsed'], function($, ellipsed) {
   'use strict';
+  var portalUrl = document.body.getAttribute('data-portal-url');
+  var urlGlobalSections = '/@navigation';
+  var globalSections = {};
 
   var ellipsis = ellipsed.ellipsis;
 
@@ -321,6 +324,70 @@ require(['jquery', 'ellipsed'], function($, ellipsed) {
   ];
 
   $(document).ready(function() {
+    var $portalGlobalnav = $('#portal-globalnav > li > a');
+
+    function setDropdownmenu(items) {
+      $portalGlobalnav.each(function(index) {
+        var href = $(this).attr('href');
+        var hasSubs =
+          items[href] && items[href].items.length > 0 ? true : false;
+        var idToSet =
+          $(this)
+            .parent()
+            .attr('id') + '-inner';
+        $(this).attr('id', idToSet);
+
+        if (hasSubs) {
+          var subitems = items[href].items;
+          $(this)
+            .parent()
+            .addClass('dropdown');
+          $(this)
+            .addClass('dropdown-toggle')
+            .attr('data-toggle', 'dropdown')
+            .attr('role', 'button')
+            .attr('aria-haspopup', 'true')
+            .attr('aria-expanded', 'false');
+          $(this).append(' <span class="caret"></span>');
+          var submenu = document.createElement('ul');
+          var $submenu = $(submenu);
+          $submenu.addClass('dropdown-menu');
+          $submenu.attr('aria-labelledby', idToSet);
+
+          subitems.forEach(function(item, index) {
+            var subitem = document.createElement('li');
+            var $subitem = $(subitem);
+            var subitemAnc = document.createElement('a');
+            var $subitemAnc = $(subitemAnc);
+            $subitemAnc.text(item.title);
+            $subitemAnc.attr('href', item['@id']);
+            $subitemAnc.attr('title', item.title);
+            $subitemAnc.appendTo($subitem);
+            $subitem.appendTo($submenu);
+          });
+          $(this)
+            .parent()
+            .append($submenu);
+        }
+      });
+    }
+
+    $.ajax({
+      url: portalUrl + urlGlobalSections,
+      data: { 'expand.navigation.depth': 2 },
+      headers: {
+        Accept: 'application/json',
+      },
+      success: function(data, status) {
+        // ottengo gli item dell'albero e gli ottimizzo in oggetto con chiave - url
+        globalSections = data.items.reduce(function(map, obj) {
+          map[obj['@id']] = obj;
+          return map;
+        }, {});
+        setDropdownmenu(globalSections);
+      },
+    });
+
     // init fontawesome icons
     icons.forEach(function(i) {
       var $el = $(i.selector);
